@@ -1,0 +1,90 @@
+\documentclass[a4paper]{article}
+
+
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[utf8]{inputenc}
+
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	citecolor=blue,
+	filecolor=blue,
+	urlcolor=blue
+}
+
+\newcommand{\terminal}[1]{
+
+\colorbox{gray}{\parbox{\textwidth}{\texttt{\textcolor{white}{\footnotesize{#1}}}}}
+
+
+}
+
+\title{DoIP-Software-Documentation}
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+
+\section{Getting Started}
+
+	\subsection{Build and Install Example Simulation}
+		To run the DoIP simulateion follow the following steps:
+
+		\begin{itemize}
+			\item Clone the project doip-custom-simulation:
+
+			\terminal{git clone https://github.com/doip/doip-custom-simulation.git}
+			
+			\item Create a copy of the repository to a meaningful name (here
+				it is "doip-myproject-simulation".
+
+			\terminal{cp doip-custom-simulation doip-myproject-simulation}
+
+			\item Delete the files for git from our copy
+
+			\terminal{rm -rf doip-myproject-simulation/.git/}
+
+			\item Navigate into to the folder of our copy
+
+			\terminal{cd doip-myproject-simulation}
+
+			\item Change the name of the project in the file settings.gradle from
+			doip-custom-simulation to doip-myproject-simulation
+
+			\item Change version number in file build.gradle, for example to 1.0.0
+
+			\item Build the project
+
+			\terminal{./gradlew build}
+
+			\item Install the distribution
+
+			\terminal{./gradlew installDist}
+
+			\item Navigate to the installation folder
+
+			\terminal{cd build/install/doip-myproject-simulation/}
+
+			\item Start the simulation
+
+			\terminal{start.sh gateway.properties}
+
+		\end{itemize}
+
+	\subsection{Configuration of the DoIP Simulation}
+		
+		The main configuration file is given at a argument to the shell script
+		"start.sh". This file is a normal Java property file. The following 
+		listing is the example configuration which is used in the repository
+		"doip-custom-simulation".
+
+
+
+\section{Software Modules}
+
+\end{document}
