@@ -7,6 +7,7 @@ This repository can be seen a a common repository for the following repositories
 * https://github.com/doip/doip-custom-simulation.git
 * https://github.com/doip/doip-junit.git
 
-The overall documentation for these repositories can be found here:
+The overall documentation for these repositories can be found above
+as a PDF file or here is the link:
 
-https://github.com/doip/doip/DoIP-Software-Documentation.pdf
+https://github.com/doip/doip/blob/master/DoIP-Software-Documentation.pdf
