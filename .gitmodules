@@ -1,0 +1,3 @@
+[submodule "submodules/doip-custom-simulation"]
+	path = submodules/doip-custom-simulation
+	url = https://github.com/doip/doip-custom-simulation.git
