@@ -1,9 +1,12 @@
 \documentclass[a4paper]{article}
 
 
-\usepackage{xcolor}
+\usepackage[dvipsnames]{xcolor}
 \usepackage{hyperref}
 \usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{listings}
+
 
 \hypersetup{
 	colorlinks=true,
@@ -13,10 +16,35 @@
 	urlcolor=blue
 }
 
+\lstset {
+	basicstyle=\ttfamily\footnotesize,
+	frame=single,
+	numbers=left,
+	numberstyle=\tiny\color{gray},
+	tabsize=4,
+	keywordstyle=\color{RedViolet},
+	commentstyle=\color{OliveGreen},
+	stringstyle=\color{blue},
+	showstringspaces=false
+}
+
+\setlength{\hoffset}{-2.54cm}
+\setlength{\voffset}{-2.54cm}
+\setlength{\oddsidemargin}{2.5cm}
+\setlength{\textwidth}{16cm}
+\setlength{\textheight}{22cm}
+\setlength{\headsep}{1cm}
+
+
+\newcommand{\todo}[1]{\colorbox{yellow}{\textbf{TODO:}} #1 }
+
+%\newcommand{\code}[1]{\colorbox{lightgray}{\texttt{#1}}}
+\newcommand{\code}[1]{\texttt{#1}}
+
+
 \newcommand{\terminal}[1]{
 
-\colorbox{gray}{\parbox{\textwidth}{\texttt{\textcolor{white}{\footnotesize{#1}}}}}
-
+\colorbox{darkgray}{\parbox{\linewidth}{\texttt{\textcolor{white}{\footnotesize{#1}}}}}
 
 }
 
@@ -30,18 +58,78 @@
 
 \section{Introduction}
 
+	This document describes the open source software components for
+	DoIP (Diagnostics over IP) which are all hosted in Github.
+
+	They are all located at \url{https://github.com/doip}
+
+	The implementation is distributed over several repositories.
+	
+	\begin{description}
+		
+		\item[\code{doip}:] This is the general repository which contains
+		overall content for the whole project. For example this document
+		is located in this repository.
+
+		\item[\code{doip-library}:] Contains source files for DoIP
+		communication which can be used in a DoIP simulation as well as
+		in an diagnostic tester for DoIP.
+
+		\item[\code{doip-simulation}:] Contains source files which are
+		specific for a DoIP simulation. The project does not contain an
+		executable. It is still a library which can be used in a custom
+		DoIP simulation
+
+		\item[\code{doip-custom-simulation}:] This project finally produces
+		an executable to start an DoIP simulation. It is supposed to create 
+		a copy of the source files and start your own implementation.
+
+		\item[\code{doip-logging}:] Contains just a wrapper around 
+		log4j2. The intention was to have the possibility to create
+		a different impementation than log4j. It is also easier to
+		have only one central place which refers to log4j2, so updates 
+		to a newer version are easier to manage.
+
+		\item[\code{doip-junit}:] It's a wrapper class for the class
+		Assert in junit. The problem in junit is that asserts will be written
+		to stderr. That makes it difficult to read logfiles created
+		by the build system Gradle. The wrapper class here just logs
+		a failed assert also to stdout, so they appear in a logfile at
+		the right position.
+
+	\end{description}
+
 \section{Getting Started}
 
 	\subsection{Build and Install Example Simulation}
+
+		An example to run the DoIP simulation is available at 
+		\url{https://github.com/doip/doip-custom-simulation}.
 		To run the DoIP simulateion follow the following steps:
 
 		\begin{itemize}
-			\item Clone the project doip-custom-simulation:
+			\item Clone the project \code{doip-custom-simulation}:
 
 			\terminal{git clone https://github.com/doip/doip-custom-simulation.git}
+
+			\item Now the source files of this project are located in the
+			folder \code{doip-custom-simulation}. 
+
+			\item Later there might be updates available at Github. To 
+			update the repository navigate into the folder 
+			\code{doip-custom-simulation} and run git to update the local
+			repository
+
+			\terminal{cd doip-custom-simulation \newline
+			git pull origin master}
+
+			\item We want to have the possibility to update the example 
+			when there are new versions available but we also want
+			to create our own simulation with our custom settings. Therefore
+			we create a copy of the exampe repositoriy.
 			
 			\item Create a copy of the repository to a meaningful name (here
-				it is "doip-myproject-simulation".
+				it is \code{doip-myproject-simulation}).
 
 			\terminal{cp doip-custom-simulation doip-myproject-simulation}
 
@@ -53,10 +141,15 @@
 
 			\terminal{cd doip-myproject-simulation}
 
-			\item Change the name of the project in the file settings.gradle from
-			doip-custom-simulation to doip-myproject-simulation
+			\item Change the name of the project in the file 
+			\code{settings.gradle} from
+			\code{doip-custom-simulation} to \code{doip-myproject-simulation}
 
-			\item Change version number in file build.gradle, for example to 1.0.0
+			\item Change version number in file 
+			\code{build.gradle}, for example to 1.0.0
+
+			\item Modify the start script because name of JAR file has changed.
+			It is located in \code{src/main/dist/start.sh}.
 
 			\item Build the project
 
@@ -83,8 +176,90 @@
 		listing is the example configuration which is used in the repository
 		"doip-custom-simulation".
 
+		\lstinputlisting[caption={gateway.properties}]{../submodules/doip-custom-simulation/src/main/dist/gateway.properties}
+		% \lstinputlisting[firstline=2, lastline=5, firstnumber=2]{../submodules/doip-custom-simulation/src/main/dist/gateway.properties}
 
+		In that file are references to the configuration files for the ECUs.
+		The following listing shows the configuration file for an ECU:
 
-\section{Software Modules}
+		\lstinputlisting[caption={EMS.properties}]{../submodules/doip-custom-simulation/src/main/dist/EMS.properties}
+
+		Within the ECU property file there is a reference to one or more
+		configuration files for the UDS messages. The following listing 
+		shows such a configuration file for UDS messages.
+
+		\lstinputlisting[caption={standard.uds}]{../submodules/doip-custom-simulation/src/main/dist/standard.uds}
+
+		In addition there can be so called modifiers added in the UDS configuration
+		file. In case a request matches it will send the response and in addition
+		it can modify other responses based on the specified request.
+
+		\lstinputlisting[caption={modifier.uds}]{listings/modifier.uds}
+
+\section{Customization of DoIP Simulation}
+
+		The possibilities to configure the DoIP simulations might might not
+		cover all use cases which are needed for a DoIP simulation. To
+		cover this use case the DoIP simulation was designed to give you
+		to possiblity to override the implementation of the predefined
+		functions. This will be done by creation of a custom class which
+		inherits from an existing class in the DoIP simulation and overrides
+		the functions.
+
+		The problem is that the existing DoIP simulation can not create
+		an instance of the inherited class, because it is not yet known 
+		at implementation time. The solution is to create a custom
+		main function where th first instance of a DoIP simulation will 
+		be created which will now be the inherited class. 
+
+		This is already done in the project \code{doip-custom-simulation}.
+		Create a copy of the source files and adjust the implementation
+		according to your needs.
+		
+		The following listing shows how to create an own main function
+		and create a custom DoIP simulation.
+
+		\lstinputlisting[language=Java, caption={doip/custom/simulation/Main.java}]{../submodules/doip-custom-simulation/src/main/java/doip/custom/simulation/Main.java}
+		
+		\lstinputlisting[language=Java, caption={doip/custom/simulation/CustomGateway.java}]{../submodules/doip-custom-simulation/src/main/java/doip/custom/simulation/CustomGateway.java}
+
+		\lstinputlisting[language=Java, caption={doip/custom/simulation/CustomEcu.java}]{../submodules/doip-custom-simulation/src/main/java/doip/custom/simulation/CustomEcu.java}
+
+\section{Gradle Build Tool}
+
+	All Java projects use Gradle as a build tool. It is not required that
+	each user will install Gradle. All projects use the so called 
+	"Gradle wrapper" which makes it easy to run and ensure that all users
+	are using the same Gradle version.
+
+	The project layout in a Gradle project is defined by convention.
+
+	\begin{description}
+
+		\item[\code{settings.gradle}]: Settings for gradle, for example
+		the project name
+
+		\item[\code{build.gradle}]: Build script where is defined what
+		to build and how to build it
+
+		\item[\code{src/main/java}]: Source code of the project which will
+		be build into one jar file
+
+		\item[\code{src/test/java}]: Unit tests which will be executed after
+		compilation
+
+		\item[...]: \todo{Describe more items in a Gradle project}
+
+	\end{description}
+
+	To run a Gradle task just type \code{./gradlew} in a bash
+	followed by the gradle task.
+
+	To build a project just run 
+
+	\terminal{./gradlew build}
+
+	The build task will also execute the unit tests. 
+
 
 \end{document}
