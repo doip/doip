@@ -1,0 +1,26 @@
+# This file contains an exampe how to use the modifiers in the UDS files.
+# After the first request/response pair there can added aadditional
+# request/response pairs. If the reqnuest will match the request 
+# pattern the response will be send out as usual. In addition the 
+# patterns after the first request/response pair will modify other
+# request/response pair.
+
+# With service 0x22 F1 86 you typically can read the current 
+# active diagnostic session. The diagnostic session can be changed with
+# servicer 0x10. The simulation data looks like the following example
+
+# If request 0x10 01 will be received it sends out the response
+# 0x50 01 00 32 01 F4. In addition it will change the response on request
+# 0x22 F1 86 to 0x62 F1 86 01
+
+10 01 : 50 01 00 32 01 F4 : 22 F1 86 : 62 F1 86 01
+
+# Similar definition for service 0x10 03, just the session is 
+# a different one.
+
+10 03 : 50 03 00 32 01 F4 : 22 F1 86 : 62 F1 86 03
+
+# This is the response for request 0x22 F1 86. This response will
+# be modified by the definitions before for service 0x10.
+
+22 F1 86 : 62 F1 86 01
