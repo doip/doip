@@ -10,4 +10,4 @@ This repository can be seen a a common repository for the following repositories
 The overall documentation for these repositories can be found above
 as a PDF file or here is the link:
 
-https://github.com/doip/doip/blob/master/DoIP-Software-Documentation.pdf
+https://github.com/doip/doip/raw/master/DoIP-Software-Documentation.pdf
