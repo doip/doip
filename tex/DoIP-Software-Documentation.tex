@@ -1,52 +1,4 @@
-\documentclass[a4paper]{article}
-
-
-\usepackage[dvipsnames]{xcolor}
-\usepackage{hyperref}
-\usepackage[utf8]{inputenc}
-\usepackage{parskip}
-\usepackage{listings}
-
-
-\hypersetup{
-	colorlinks=true,
-	linkcolor=blue,
-	citecolor=blue,
-	filecolor=blue,
-	urlcolor=blue
-}
-
-\lstset {
-	basicstyle=\ttfamily\footnotesize,
-	frame=single,
-	numbers=left,
-	numberstyle=\tiny\color{gray},
-	tabsize=4,
-	keywordstyle=\color{RedViolet},
-	commentstyle=\color{OliveGreen},
-	stringstyle=\color{blue},
-	showstringspaces=false
-}
-
-\setlength{\hoffset}{-2.54cm}
-\setlength{\voffset}{-2.54cm}
-\setlength{\oddsidemargin}{2.5cm}
-\setlength{\textwidth}{16cm}
-\setlength{\textheight}{22cm}
-\setlength{\headsep}{1cm}
-
-
-\newcommand{\todo}[1]{\colorbox{yellow}{\textbf{TODO:}} #1 }
-
-%\newcommand{\code}[1]{\colorbox{lightgray}{\texttt{#1}}}
-\newcommand{\code}[1]{\texttt{#1}}
-
-
-\newcommand{\terminal}[1]{
-
-\colorbox{darkgray}{\parbox{\linewidth}{\texttt{\textcolor{white}{\footnotesize{#1}}}}}
-
-}
+\documentclass[a4paper]{doipdoc}
 
 \title{DoIP-Software-Documentation}
 
@@ -61,7 +13,7 @@
 	This document describes the open source software components for
 	DoIP (Diagnostics over IP) which are all hosted in Github.
 
-	They are all located at \url{https://github.com/doip}
+	They are all located at \url{https://github.com/doip}.
 
 	The implementation is distributed over several repositories.
 	
@@ -69,7 +21,8 @@
 		
 		\item[\code{doip}:] This is the general repository which contains
 		overall content for the whole project. For example this document
-		is located in this repository.
+		is located in this repository. All issues for the subprojects
+		are also managed here. 
 
 		\item[\code{doip-library}:] Contains source files for DoIP
 		communication which can be used in a DoIP simulation as well as
@@ -83,6 +36,11 @@
 		\item[\code{doip-custom-simulation}:] This project finally produces
 		an executable to start an DoIP simulation. It is supposed to create 
 		a copy of the source files and start your own implementation.
+
+		\item[\code{doip-tester}:] This project contains mainly unit tests
+		for testing a real ECU or the simulation. The unit tests expect
+		that somewhere a DoIP ECU or a simulation is running. The unit tests
+		can be executed with gradle.
 
 		\item[\code{doip-logging}:] Contains just a wrapper around 
 		log4j2. The intention was to have the possibility to create
@@ -104,8 +62,8 @@
 	\subsection{Build and Install Example Simulation}
 
 		An example to run the DoIP simulation is available at 
-		\url{https://github.com/doip/doip-custom-simulation}.
-		To run the DoIP simulateion follow the following steps:
+		\url{https://github.com/doip/doip-custom-simulation.git}.
+		To run the DoIP simulation follow the following steps:
 
 		\begin{itemize}
 			\item Clone the project \code{doip-custom-simulation}:
@@ -137,7 +95,7 @@
 
 			\terminal{rm -rf doip-myproject-simulation/.git/}
 
-			\item Navigate into to the folder of our copy
+			\item Navigate into the folder of our copy
 
 			\terminal{cd doip-myproject-simulation}
 
@@ -150,6 +108,8 @@
 
 			\item Modify the start script because name of JAR file has changed.
 			It is located in \code{src/main/dist/start.sh}.
+
+			\item Modify all configuration files in \code{src/main/dist}.
 
 			\item Build the project
 
@@ -247,8 +207,9 @@
 
 		\item[\code{src/test/java}]: Unit tests which will be executed after
 		compilation
-
-		\item[...]: \todo{Describe more items in a Gradle project}
+		
+		\item[\code{src/main/dist}]: All these files and folders will be packed 
+		also into the distribution (only if distribution plugin is used).
 
 	\end{description}
 
@@ -259,7 +220,19 @@
 
 	\terminal{./gradlew build}
 
-	The build task will also execute the unit tests. 
+	The build task will also execute the unit tests. The comiled jar will be 
+	located at \code{build/libs}. If distribution plugin is used then the 
+	distribution will be build into folder \code{build/distributions}.
+
+	In case of using the distribution plugin you can run the following command
+	to extract the distribution.
+
+	\terminal{./gradlew installDist}
+
+	After that the extracted files can be found in the folder 
+	\code{build/install}. You can navigate in the subfolder and run the
+	application. In our case there should be a shell script "start.sh" 
+	which can be called.
 
 
 \end{document}
