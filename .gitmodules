@@ -1,3 +1,12 @@
 [submodule "submodules/doip-custom-simulation"]
-	path = submodules/doip-custom-simulation
+	path = doip-software/doip-custom-simulation
 	url = https://github.com/doip/doip-custom-simulation.git
+[submodule "doip-software/doip-junit"]
+	path = doip-software/doip-junit
+	url = https://github.com/doip/doip-junit.git
+[submodule "doip-software/doip-library"]
+	path = doip-software/doip-library
+	url = https://github.com/doip/doip-library.git
+[submodule "doip-software/doip-simulation"]
+	path = doip-software/doip-simulation
+	url = https://github.com/doip/doip-simulation.git

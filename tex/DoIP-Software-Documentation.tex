@@ -21,8 +21,13 @@
 		
 		\item[\code{doip}:] This is the general repository which contains
 		overall content for the whole project. For example this document
-		is located in this repository. All issues for the subprojects
-		are also managed here. 
+		is located in this repository. Issues are also handled here at
+		GitHub if it is not yet clear which submodule is required to
+		change or implement new features. If it is required to make changes
+		in a specific submodule then a new issue will be created in the 
+		submodule. The reason is that in GitHub it is possible to link
+		issues to milestones and pull requests. But that is only possible
+		within one project.
 
 		\item[\code{doip-library}:] Contains source files for DoIP
 		communication which can be used in a DoIP simulation as well as
@@ -63,7 +68,15 @@
 
 		An example to run the DoIP simulation is available at 
 		\url{https://github.com/doip/doip-custom-simulation.git}.
-		To run the DoIP simulation follow the following steps:
+
+		The project uses Gradle as as build tool. That means a whole
+		distribution will be the output of the build process which also
+		includes a zip file with version number which you can ship
+		to your customer as a distribution which they can directly run.
+		It is not required to ship the source project to customers and
+		ask them to run gradle to get a executable.
+
+		To get a customized DoIP simulation do the following steps:
 
 		\begin{itemize}
 			\item Clone the project \code{doip-custom-simulation}:
@@ -106,6 +119,17 @@
 			\item Change version number in file 
 			\code{build.gradle}, for example to 1.0.0
 
+			\item We strongly recommend to change this version number for
+				each distribution you will release and ship to customer.
+
+			\item Now it's important o understand the build process of Gradle.
+			All files in \code{src/main/dist} will be in the root folder of
+			the distribution. This folder includes at the moment only some
+			files as an example. These files need to be changed by you. 
+
+			\item \textbf{Don't bypass the build process of gradle by manually
+			copy files around. Gradle is your friend, just use it!}
+
 			\item Modify the start script because name of JAR file has changed.
 			It is located in \code{src/main/dist/start.sh}.
 
@@ -115,7 +139,11 @@
 
 			\terminal{./gradlew build}
 
-			\item Install the distribution
+			\item Now the distribution had been build and is located in folder
+				\code{build/distributions}. 
+
+			\item You can install (which is just a unzip) the distribution 
+				with the following command:
 
 			\terminal{./gradlew installDist}
 
@@ -123,9 +151,15 @@
 
 			\terminal{cd build/install/doip-myproject-simulation/}
 
-			\item Start the simulation
+			\item Start the simulation. The existing files might have 
+				changed and renamed by you, so the following command
+				is just to run the existing command in the example.
 
 			\terminal{start.sh gateway.properties}
+
+			\item The start script \code{start.sh} is also just an example.
+				You can create also a \code{script.bat} to run it just
+				straight away in Windows.
 
 		\end{itemize}
 
@@ -136,19 +170,19 @@
 		listing is the example configuration which is used in the repository
 		"doip-custom-simulation".
 
-		\lstinputlisting[caption={gateway.properties}]{../submodules/doip-custom-simulation/src/main/dist/gateway.properties}
-		% \lstinputlisting[firstline=2, lastline=5, firstnumber=2]{../submodules/doip-custom-simulation/src/main/dist/gateway.properties}
+		\lstinputlisting[caption={gateway.properties}]{../doip-software/doip-custom-simulation/src/main/dist/gateway.properties}
+		% \lstinputlisting[firstline=2, lastline=5, firstnumber=2]{../doip-software/doip-custom-simulation/src/main/dist/gateway.properties}
 
 		In that file are references to the configuration files for the ECUs.
 		The following listing shows the configuration file for an ECU:
 
-		\lstinputlisting[caption={EMS.properties}]{../submodules/doip-custom-simulation/src/main/dist/EMS.properties}
+		\lstinputlisting[caption={EMS.properties}]{../doip-software/doip-custom-simulation/src/main/dist/EMS.properties}
 
 		Within the ECU property file there is a reference to one or more
 		configuration files for the UDS messages. The following listing 
 		shows such a configuration file for UDS messages.
 
-		\lstinputlisting[caption={standard.uds}]{../submodules/doip-custom-simulation/src/main/dist/standard.uds}
+		\lstinputlisting[caption={standard.uds}]{../doip-software/doip-custom-simulation/src/main/dist/standard.uds}
 
 		In addition there can be so called modifiers added in the UDS configuration
 		file. In case a request matches it will send the response and in addition
@@ -179,11 +213,11 @@
 		The following listing shows how to create an own main function
 		and create a custom DoIP simulation.
 
-		\lstinputlisting[language=Java, caption={doip/custom/simulation/Main.java}]{../submodules/doip-custom-simulation/src/main/java/doip/custom/simulation/Main.java}
+		\lstinputlisting[language=Java, caption={doip/custom/simulation/Main.java}]{../doip-software/doip-custom-simulation/src/main/java/doip/custom/simulation/Main.java}
 		
-		\lstinputlisting[language=Java, caption={doip/custom/simulation/CustomGateway.java}]{../submodules/doip-custom-simulation/src/main/java/doip/custom/simulation/CustomGateway.java}
+		\lstinputlisting[language=Java, caption={doip/custom/simulation/CustomGateway.java}]{../doip-software/doip-custom-simulation/src/main/java/doip/custom/simulation/CustomGateway.java}
 
-		\lstinputlisting[language=Java, caption={doip/custom/simulation/CustomEcu.java}]{../submodules/doip-custom-simulation/src/main/java/doip/custom/simulation/CustomEcu.java}
+		\lstinputlisting[language=Java, caption={doip/custom/simulation/CustomEcu.java}]{../doip-software/doip-custom-simulation/src/main/java/doip/custom/simulation/CustomEcu.java}
 
 \section{Gradle Build Tool}
 
