@@ -10,3 +10,9 @@
 [submodule "doip-software/doip-simulation"]
 	path = doip-software/doip-simulation
 	url = https://github.com/doip/doip-simulation.git
+[submodule "doip-software/doip-tester-toolkit"]
+	path = doip-software/doip-tester-toolkit
+	url = https://github.com/doip/doip-tester-toolkit.git
+[submodule "doip-software/doip-tester"]
+	path = doip-software/doip-tester
+	url = https://github.com/doip/doip-tester.git
