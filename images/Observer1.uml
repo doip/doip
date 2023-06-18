@@ -1,0 +1,8 @@
+@startuml
+skinparam dpi 600
+skinparam linetype ortho
+Subject -> Observer
+Observer <|-- MyObserver
+Subject <|-- MySubject
+MySubject <- MyObserver
+@enduml
