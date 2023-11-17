@@ -16,3 +16,21 @@
 [submodule "doip-software/doip-tester"]
 	path = doip-software/doip-tester
 	url = https://github.com/doip/doip-tester.git
+[submodule "doip-software/starcode88-jtest"]
+	path = doip-software/starcode88-jtest
+	url = https://github.com/starcode88/starcode88-jtest.git
+[submodule "doip-software/starcode88-jutils"]
+	path = doip-software/starcode88-jutils
+	url = https://github.com/starcode88/starcode88-jutils.git
+[submodule "doip-software/doip-simulation-api"]
+	path = doip-software/doip-simulation-api
+	url = https://github.com/doip/doip-simulation-api.git
+[submodule "doip-software/doip-simulation-http-server"]
+	path = doip-software/doip-simulation-http-server
+	url = https://github.com/doip/doip-simulation-http-server.git
+[submodule "doip-software/starcode88-jhttp"]
+	path = doip-software/starcode88-jhttp
+	url = https://github.com/starcode88/starcode88-jhttp.git
+[submodule "doip-software/doip-simulation-http-lib"]
+	path = doip-software/doip-simulation-http-lib
+	url = https://github.com/doip/doip-simulation-http-lib.git

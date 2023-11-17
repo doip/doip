@@ -8,9 +8,15 @@
  */
 
 rootProject.name = 'doip-software'
-includeBuild 'doip-junit'
+includeBuild 'starcode88-jtest'
+includeBuild 'starcode88-jutils'
+includeBuild 'starcode88-jhttp'
 includeBuild 'doip-library'
+includeBuild 'doip-simulation-api'
 includeBuild 'doip-simulation'
 includeBuild 'doip-custom-simulation'
 includeBuild 'doip-tester-toolkit'
 includeBuild 'doip-tester'
+includeBuild 'doip-simulation-http-lib'
+includeBuild 'doip-simulation-http-server'
+includeBuild 'doip-simulation-http-client'
